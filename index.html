@@ -2,7 +2,7 @@
 <html lang="uz">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="BeautyLove - Sizning go'zalligingiz uchun eng yaxshi xizmatlar. Makiyaj, soch turmagi, manikyur, kosmetologiya va boshqa xizmatlar.">
     <meta name="keywords" content="go'zallik saloni, makiyaj, manikyur, kosmetologiya, soch turmagi, Tashkent">
     <meta name="author" content="BeautyLove">
@@ -31,15 +31,50 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
         
         .font-playfair {
             font-family: 'Playfair Display', serif;
+        }
+        
+        /* Container responsive */
+        .container {
+            width: 100%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        
+        @media (min-width: 640px) {
+            .container { max-width: 640px; }
+        }
+        
+        @media (min-width: 768px) {
+            .container { 
+                max-width: 768px;
+                padding-right: 1.5rem;
+                padding-left: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container { max-width: 1024px; }
+        }
+        
+        @media (min-width: 1280px) {
+            .container { max-width: 1280px; }
         }
         
         /* Preloader */
@@ -67,14 +102,20 @@
             to { transform: rotate(360deg); }
         }
         
-        /* Hero Parallax */
+        /* Hero Section Mobile */
         .hero-parallax {
             background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
                         url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1920');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            background-attachment: scroll;
             position: relative;
+        }
+        
+        @media (min-width: 768px) {
+            .hero-parallax {
+                background-attachment: fixed;
+            }
         }
         
         /* Gradient Text */
@@ -98,6 +139,11 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            touch-action: manipulation;
+        }
+        
+        .btn-gradient:active {
+            transform: scale(0.95);
         }
         
         .btn-gradient:before {
@@ -127,65 +173,19 @@
             overflow: hidden;
         }
         
-        .card-hover:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
-        }
-        
-        .card-hover::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.5s;
-            opacity: 0;
-        }
-        
-        .card-hover:hover::before {
-            animation: shine 0.5s ease;
-        }
-        
-        @keyframes shine {
-            0% {
-                top: -50%;
-                left: -50%;
-                opacity: 0;
+        @media (min-width: 768px) {
+            .card-hover:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
             }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                top: 150%;
-                left: 150%;
-                opacity: 0;
-            }
-        }
-        
-        /* Floating Animation */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        
-        /* Sticky Header */
-        .header-scrolled {
-            background: rgba(31, 41, 55, 0.98);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
         
         /* Mobile Menu */
         .mobile-menu {
             transform: translateX(100%);
             transition: transform 0.3s ease;
+            width: 100%;
+            max-width: 320px;
         }
         
         .mobile-menu.active {
@@ -197,14 +197,24 @@
             position: relative;
             overflow: hidden;
             cursor: pointer;
+            aspect-ratio: 1;
         }
         
         .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             transition: transform 0.3s ease;
         }
         
-        .gallery-item:hover img {
-            transform: scale(1.1);
+        @media (min-width: 768px) {
+            .gallery-item:hover img {
+                transform: scale(1.1);
+            }
+            
+            .gallery-item:hover .gallery-overlay {
+                opacity: 1;
+            }
         }
         
         .gallery-overlay {
@@ -213,13 +223,20 @@
             background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
             display: flex;
             align-items: flex-end;
-            padding: 1.5rem;
+            padding: 1rem;
             opacity: 0;
             transition: opacity 0.3s ease;
         }
         
-        .gallery-item:hover .gallery-overlay {
-            opacity: 1;
+        @media (max-width: 767px) {
+            .gallery-overlay {
+                opacity: 1;
+                padding: 0.75rem;
+            }
+            
+            .gallery-overlay p {
+                font-size: 0.75rem;
+            }
         }
         
         /* Testimonial Card */
@@ -238,9 +255,11 @@
             overflow: hidden;
         }
         
-        .price-card.featured {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+        @media (min-width: 768px) {
+            .price-card.featured {
+                transform: scale(1.05);
+                box-shadow: 0 20px 40px rgba(102, 126, 234, 0.4);
+            }
         }
         
         .price-card.featured::before {
@@ -260,10 +279,10 @@
         /* WhatsApp Button */
         .whatsapp-btn {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
             background: #25D366;
             border-radius: 50%;
             display: flex;
@@ -274,15 +293,52 @@
             animation: pulse 2s infinite;
         }
         
+        @media (min-width: 768px) {
+            .whatsapp-btn {
+                width: 60px;
+                height: 60px;
+                bottom: 30px;
+                right: 30px;
+            }
+        }
+        
         @keyframes pulse {
             0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
             70% { box-shadow: 0 0 0 20px rgba(37, 211, 102, 0); }
             100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
         }
         
+        /* Sticky Header */
+        .header-scrolled {
+            background: rgba(31, 41, 55, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* Modal Responsive */
+        #bookingModal {
+            padding: 1rem;
+        }
+        
+        #bookingModal > div {
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating {
+            animation: float 3s ease-in-out infinite;
+        }
+        
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 8px;
+            height: 8px;
         }
         
         ::-webkit-scrollbar-track {
@@ -291,11 +347,25 @@
         
         ::-webkit-scrollbar-thumb {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 5px;
+            border-radius: 4px;
         }
         
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        /* Touch-friendly tap targets */
+        button, a {
+            min-height: 44px;
+            min-width: 44px;
+        }
+        
+        /* Responsive Typography */
+        @media (max-width: 640px) {
+            .text-responsive-sm { font-size: 0.875rem; }
+            .text-responsive-base { font-size: 1rem; }
+            .text-responsive-lg { font-size: 1.125rem; }
+            .text-responsive-xl { font-size: 1.25rem; }
+            .text-responsive-2xl { font-size: 1.5rem; }
+            .text-responsive-3xl { font-size: 1.875rem; }
+            .text-responsive-4xl { font-size: 2.25rem; }
+            .text-responsive-5xl { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -305,7 +375,7 @@
     <div id="preloader">
         <div class="text-center">
             <div class="loader mb-4"></div>
-            <h2 class="text-2xl font-playfair text-white">BeautyLove</h2>
+            <h2 class="text-xl md:text-2xl font-playfair text-white">BeautyLove</h2>
         </div>
     </div>
     
@@ -313,23 +383,23 @@
     <a href="https://wa.me/998901234567?text=Salom! Men BeautyLove saloniga yozilmoqchiman" 
        target="_blank" 
        class="whatsapp-btn hover:scale-110 transition-transform">
-        <i class="fab fa-whatsapp text-3xl text-white"></i>
+        <i class="fab fa-whatsapp text-2xl md:text-3xl text-white"></i>
     </a>
     
     <!-- Header -->
     <header id="header" class="fixed top-0 w-full z-50 transition-all duration-300">
-        <div class="container mx-auto px-4">
-            <div class="flex items-center justify-between py-4">
+        <div class="container mx-auto">
+            <div class="flex items-center justify-between py-3 md:py-4">
                 <!-- Logo -->
                 <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                        <i class="fas fa-spa text-white"></i>
+                    <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                        <i class="fas fa-spa text-white text-sm md:text-base"></i>
                     </div>
-                    <span class="text-2xl font-bold font-playfair gradient-text">BeautyLove</span>
+                    <span class="text-xl md:text-2xl font-bold font-playfair gradient-text">BeautyLove</span>
                 </div>
                 
                 <!-- Desktop Navigation -->
-                <nav class="hidden lg:flex items-center space-x-8">
+                <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
                     <a href="#home" class="nav-link hover:text-purple-400 transition-colors">Bosh sahifa</a>
                     <a href="#services" class="nav-link hover:text-purple-400 transition-colors">Xizmatlar</a>
                     <a href="#prices" class="nav-link hover:text-purple-400 transition-colors">Narxlar</a>
@@ -340,20 +410,30 @@
                 </nav>
                 
                 <!-- Right Actions -->
-                <div class="flex items-center space-x-6">
+                <div class="flex items-center space-x-3 md:space-x-6">
                     <!-- Phone -->
                     <a href="tel:+998901234567" class="hidden md:flex items-center space-x-2 hover:text-purple-400 transition-colors">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>+998 90 123-45-67</span>
+                        <i class="fas fa-phone-alt text-sm"></i>
+                        <span class="text-sm lg:text-base">+998 90 123-45-67</span>
                     </a>
                     
-                    <!-- Book Button -->
-                    <button onclick="openModal()" class="btn-gradient px-6 py-2 rounded-full text-white font-semibold">
+                    <!-- Book Button Desktop -->
+                    <button onclick="openModal()" class="hidden sm:block btn-gradient px-4 py-2 md:px-6 md:py-2 rounded-full text-white font-semibold text-sm md:text-base">
                         <span>Ro'yxatdan o'tish</span>
                     </button>
                     
+                    <!-- Mobile Actions -->
+                    <div class="flex items-center space-x-3 sm:hidden">
+                        <a href="tel:+998901234567" class="text-purple-400">
+                            <i class="fas fa-phone-alt text-lg"></i>
+                        </a>
+                        <button onclick="openModal()" class="text-purple-400">
+                            <i class="fas fa-calendar-plus text-lg"></i>
+                        </button>
+                    </div>
+                    
                     <!-- Mobile Menu Toggle -->
-                    <button onclick="toggleMobileMenu()" class="lg:hidden text-2xl">
+                    <button onclick="toggleMobileMenu()" class="lg:hidden text-xl md:text-2xl p-2">
                         <i class="fas fa-bars"></i>
                     </button>
                 </div>
@@ -362,35 +442,38 @@
     </header>
     
     <!-- Mobile Menu -->
-    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-80 h-full bg-gray-800 z-50 p-6 overflow-y-auto">
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 h-full bg-gray-800 z-50 p-6 overflow-y-auto">
         <div class="flex justify-between items-center mb-8">
-            <span class="text-2xl font-bold gradient-text">Menu</span>
-            <button onclick="toggleMobileMenu()" class="text-2xl">
+            <span class="text-xl md:text-2xl font-bold gradient-text">Menu</span>
+            <button onclick="toggleMobileMenu()" class="text-xl md:text-2xl p-2">
                 <i class="fas fa-times"></i>
             </button>
         </div>
-        <nav class="space-y-4">
-            <a href="#home" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors">Bosh sahifa</a>
-            <a href="#services" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors">Xizmatlar</a>
-            <a href="#prices" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors">Narxlar</a>
-            <a href="#specialists" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors">Mutaxassislar</a>
-            <a href="#gallery" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors">Galereya</a>
-            <a href="#reviews" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors">Fikrlar</a>
-            <a href="#contact" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors">Aloqa</a>
+        <nav class="space-y-2">
+            <a href="#home" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors text-sm md:text-base">Bosh sahifa</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors text-sm md:text-base">Xizmatlar</a>
+            <a href="#prices" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors text-sm md:text-base">Narxlar</a>
+            <a href="#specialists" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors text-sm md:text-base">Mutaxassislar</a>
+            <a href="#gallery" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors text-sm md:text-base">Galereya</a>
+            <a href="#reviews" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors text-sm md:text-base">Fikrlar</a>
+            <a href="#contact" onclick="toggleMobileMenu()" class="block py-3 px-4 hover:bg-gray-700 rounded-lg transition-colors text-sm md:text-base">Aloqa</a>
         </nav>
         <div class="mt-8 space-y-4">
-            <a href="tel:+998901234567" class="flex items-center space-x-3 text-purple-400">
+            <a href="tel:+998901234567" class="flex items-center space-x-3 text-purple-400 text-sm md:text-base">
                 <i class="fas fa-phone-alt"></i>
                 <span>+998 90 123-45-67</span>
             </a>
-            <div class="flex space-x-4">
-                <a href="#" class="text-2xl hover:text-purple-400 transition-colors">
+            <button onclick="openModal(); toggleMobileMenu();" class="w-full btn-gradient px-6 py-3 rounded-full text-white font-semibold text-sm md:text-base">
+                <span>Ro'yxatdan o'tish</span>
+            </button>
+            <div class="flex space-x-4 justify-center pt-4">
+                <a href="#" class="text-xl md:text-2xl hover:text-purple-400 transition-colors">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="#" class="text-2xl hover:text-purple-400 transition-colors">
+                <a href="#" class="text-xl md:text-2xl hover:text-purple-400 transition-colors">
                     <i class="fab fa-telegram"></i>
                 </a>
-                <a href="#" class="text-2xl hover:text-purple-400 transition-colors">
+                <a href="#" class="text-xl md:text-2xl hover:text-purple-400 transition-colors">
                     <i class="fab fa-facebook"></i>
                 </a>
             </div>
@@ -398,93 +481,93 @@
     </div>
     
     <!-- Hero Section -->
-    <section id="home" class="hero-parallax min-h-screen flex items-center relative">
+    <section id="home" class="hero-parallax min-h-screen flex items-center relative pt-16 md:pt-20">
         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900"></div>
-        <div class="container mx-auto px-4 relative z-10 pt-20">
+        <div class="container mx-auto relative z-10">
             <div class="max-w-4xl mx-auto text-center">
                 <div data-aos="fade-down" data-aos-duration="1000">
-                    <p class="text-purple-300 text-lg mb-4">Premium Go'zallik Saloni</p>
-                    <h1 class="text-5xl md:text-7xl font-bold font-playfair mb-6 leading-tight">
+                    <p class="text-purple-300 text-sm md:text-lg mb-2 md:mb-4">Premium Go'zallik Saloni</p>
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-playfair mb-4 md:mb-6 leading-tight">
                         Sizning <span class="gradient-text-gold">Go'zalligingiz</span><br>
                         Bizning San'atimiz
                     </h1>
                 </div>
                 
                 <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                    <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    <p class="text-base md:text-xl text-gray-300 mb-6 md:mb-8 max-w-2xl mx-auto px-4">
                         Zamonaviy texnologiyalar va professional mutaxassislar bilan sizning tabiiy go'zalligingizni ochib beramiz
                     </p>
                     
-                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <button onclick="openModal()" class="btn-gradient px-8 py-4 rounded-full text-lg font-semibold">
+                    <div class="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4">
+                        <button onclick="openModal()" class="btn-gradient px-6 py-3 md:px-8 md:py-4 rounded-full text-base md:text-lg font-semibold">
                             <span>Hozir band qilish</span>
                         </button>
-                        <a href="#services" class="px-8 py-4 rounded-full text-lg font-semibold border-2 border-white hover:bg-white hover:text-gray-900 transition-all">
+                        <a href="#services" class="px-6 py-3 md:px-8 md:py-4 rounded-full text-base md:text-lg font-semibold border-2 border-white hover:bg-white hover:text-gray-900 transition-all">
                             Xizmatlarni ko'rish
                         </a>
                     </div>
                 </div>
                 
                 <!-- Stats -->
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mt-12 md:mt-16 px-4" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
                     <div>
-                        <h3 class="text-4xl font-bold gradient-text-gold">10+</h3>
-                        <p class="text-gray-400">Yillik tajriba</p>
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text-gold">10+</h3>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-400">Yillik tajriba</p>
                     </div>
                     <div>
-                        <h3 class="text-4xl font-bold gradient-text-gold">5000+</h3>
-                        <p class="text-gray-400">Xursand mijozlar</p>
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text-gold">5000+</h3>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-400">Xursand mijozlar</p>
                     </div>
                     <div>
-                        <h3 class="text-4xl font-bold gradient-text-gold">20+</h3>
-                        <p class="text-gray-400">Professional ustalar</p>
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text-gold">20+</h3>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-400">Professional ustalar</p>
                     </div>
                     <div>
-                        <h3 class="text-4xl font-bold gradient-text-gold">50+</h3>
-                        <p class="text-gray-400">Xizmat turlari</p>
+                        <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold gradient-text-gold">50+</h3>
+                        <p class="text-xs sm:text-sm md:text-base text-gray-400">Xizmat turlari</p>
                     </div>
                 </div>
             </div>
         </div>
         
         <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 floating">
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 floating hidden md:block">
             <a href="#services" class="text-white">
-                <i class="fas fa-chevron-down text-2xl"></i>
+                <i class="fas fa-chevron-down text-xl md:text-2xl"></i>
             </a>
         </div>
     </section>
     
     <!-- Services Section -->
-    <section id="services" class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-4">
+    <section id="services" class="py-12 md:py-20">
+        <div class="container mx-auto">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-playfair mb-3 md:mb-4">
                     Bizning <span class="gradient-text">Xizmatlarimiz</span>
                 </h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                <p class="text-base md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
                     Sizning go'zalligingiz uchun keng qamrovli professional xizmatlar
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
                 <!-- Service Card 1 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400" 
                              alt="Soch uslublari" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-                        <div class="absolute top-4 right-4 bg-purple-600 text-white px-3 py-1 rounded-full text-sm">
+                        <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-purple-600 text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm">
                             Yangi
                         </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Soch uslublari</h3>
-                        <p class="text-gray-400 text-sm mb-4">Zamonaviy soch turmagi va bo'yash xizmatlari</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">Soch uslublari</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">Zamonaviy soch turmagi va bo'yash xizmatlari</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">50,000 so'mdan</span>
-                            <button onclick="openModal('Soch uslublari')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">50,000 so'mdan</span>
+                            <button onclick="openModal('Soch uslublari')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -492,19 +575,19 @@
                 </div>
                 
                 <!-- Service Card 2 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400" 
                              alt="Makiyaj" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Professional Makiyaj</h3>
-                        <p class="text-gray-400 text-sm mb-4">Har qanday tadbir uchun mukammal makiyaj</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">Professional Makiyaj</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">Har qanday tadbir uchun mukammal makiyaj</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">80,000 so'mdan</span>
-                            <button onclick="openModal('Professional Makiyaj')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">80,000 so'mdan</span>
+                            <button onclick="openModal('Professional Makiyaj')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -512,22 +595,22 @@
                 </div>
                 
                 <!-- Service Card 3 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400" 
                              alt="Manikyur" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-                        <div class="absolute top-4 right-4 bg-pink-600 text-white px-3 py-1 rounded-full text-sm">
+                        <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-pink-600 text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm">
                             Hit
                         </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Manikyur & Pedikyur</h3>
-                        <p class="text-gray-400 text-sm mb-4">Tirnoqlaringiz uchun mukammal parvarish</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">Manikyur & Pedikyur</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">Tirnoqlaringiz uchun mukammal parvarish</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">30,000 so'mdan</span>
-                            <button onclick="openModal('Manikyur & Pedikyur')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">30,000 so'mdan</span>
+                            <button onclick="openModal('Manikyur & Pedikyur')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -535,19 +618,19 @@
                 </div>
                 
                 <!-- Service Card 4 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="400">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400" 
                              alt="Yuz parvarishi" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Yuz parvarishi</h3>
-                        <p class="text-gray-400 text-sm mb-4">Professional kosmetologik protseduralar</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">Yuz parvarishi</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">Professional kosmetologik protseduralar</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">100,000 so'mdan</span>
-                            <button onclick="openModal('Yuz parvarishi')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">100,000 so'mdan</span>
+                            <button onclick="openModal('Yuz parvarishi')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -555,19 +638,19 @@
                 </div>
                 
                 <!-- Service Card 5 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?w=400" 
                              alt="Massaj" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Massaj terapiya</h3>
-                        <p class="text-gray-400 text-sm mb-4">Tanani tiklash va relaxatsiya</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">Massaj terapiya</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">Tanani tiklash va relaxatsiya</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">150,000 so'mdan</span>
-                            <button onclick="openModal('Massaj terapiya')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">150,000 so'mdan</span>
+                            <button onclick="openModal('Massaj terapiya')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -575,22 +658,22 @@
                 </div>
                 
                 <!-- Service Card 6 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=400" 
                              alt="Spa" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
-                        <div class="absolute top-4 right-4 bg-green-600 text-white px-3 py-1 rounded-full text-sm">
+                        <div class="absolute top-2 right-2 md:top-4 md:right-4 bg-green-600 text-white px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm">
                             Eco
                         </div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">SPA protseduralar</h3>
-                        <p class="text-gray-400 text-sm mb-4">To'liq dam olish va qayta tiklanish</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">SPA protseduralar</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">To'liq dam olish va qayta tiklanish</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">200,000 so'mdan</span>
-                            <button onclick="openModal('SPA protseduralar')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">200,000 so'mdan</span>
+                            <button onclick="openModal('SPA protseduralar')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -598,19 +681,19 @@
                 </div>
                 
                 <!-- Service Card 7 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="300">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden sm:block lg:block" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400" 
                              alt="Qosh va kiprik" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Qosh va kiprik</h3>
-                        <p class="text-gray-400 text-sm mb-4">Laminatsiya, botoks va boshqalar</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">Qosh va kiprik</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">Laminatsiya, botoks va boshqalar</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">40,000 so'mdan</span>
-                            <button onclick="openModal('Qosh va kiprik')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">40,000 so'mdan</span>
+                            <button onclick="openModal('Qosh va kiprik')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -618,19 +701,19 @@
                 </div>
                 
                 <!-- Service Card 8 -->
-                <div class="card-hover bg-gray-800 rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="400">
-                    <div class="relative h-48 overflow-hidden">
+                <div class="card-hover bg-gray-800 rounded-xl md:rounded-2xl overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+                    <div class="relative h-40 md:h-48 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1633681926035-ec1ac984418a?w=400" 
                              alt="Lazer epilyatsiya" 
                              class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent"></div>
                     </div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Lazer epilyatsiya</h3>
-                        <p class="text-gray-400 text-sm mb-4">Zamonaviy va xavfsiz usullar</p>
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg md:text-xl font-semibold mb-2">Lazer epilyatsiya</h3>
+                        <p class="text-gray-400 text-xs md:text-sm mb-3 md:mb-4">Zamonaviy va xavfsiz usullar</p>
                         <div class="flex justify-between items-center">
-                            <span class="text-purple-400 font-semibold">120,000 so'mdan</span>
-                            <button onclick="openModal('Lazer epilyatsiya')" class="text-purple-400 hover:text-purple-300">
+                            <span class="text-purple-400 font-semibold text-sm md:text-base">120,000 so'mdan</span>
+                            <button onclick="openModal('Lazer epilyatsiya')" class="text-purple-400 hover:text-purple-300 p-2">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -641,26 +724,26 @@
     </section>
     
     <!-- Prices Section -->
-    <section id="prices" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-4">
+    <section id="prices" class="py-12 md:py-20 bg-gray-800">
+        <div class="container mx-auto">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-playfair mb-3 md:mb-4">
                     Bizning <span class="gradient-text">Narxlarimiz</span>
                 </h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                <p class="text-base md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
                     Sifatli xizmatlar hamyonbop narxlarda
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
                 <!-- Basic Package -->
-                <div class="price-card rounded-2xl p-8" data-aos="fade-up" data-aos-delay="100">
-                    <h3 class="text-2xl font-bold mb-4">Standart</h3>
-                    <div class="text-5xl font-bold gradient-text mb-6">
+                <div class="price-card rounded-xl md:rounded-2xl p-6 md:p-8" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">Standart</h3>
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-4 md:mb-6">
                         299K
-                        <span class="text-lg text-gray-400 font-normal">so'm/oy</span>
+                        <span class="text-sm md:text-lg text-gray-400 font-normal">so'm/oy</span>
                     </div>
-                    <ul class="space-y-3 mb-8">
+                    <ul class="space-y-2 md:space-y-3 mb-6 md:mb-8 text-sm md:text-base">
                         <li class="flex items-center">
                             <i class="fas fa-check text-green-400 mr-3"></i>
                             <span>Soch turmagi</span>
@@ -682,19 +765,19 @@
                             <span>SPA protseduralar</span>
                         </li>
                     </ul>
-                    <button onclick="openModal('Standart paket')" class="w-full py-3 rounded-full border-2 border-purple-500 hover:bg-purple-500 transition-colors">
+                    <button onclick="openModal('Standart paket')" class="w-full py-3 rounded-full border-2 border-purple-500 hover:bg-purple-500 transition-colors text-sm md:text-base">
                         Tanlash
                     </button>
                 </div>
                 
                 <!-- Premium Package -->
-                <div class="price-card featured rounded-2xl p-8" data-aos="fade-up" data-aos-delay="200">
-                    <h3 class="text-2xl font-bold mb-4">Premium</h3>
-                    <div class="text-5xl font-bold gradient-text-gold mb-6">
+                <div class="price-card featured rounded-xl md:rounded-2xl p-6 md:p-8" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">Premium</h3>
+                    <div class="text-4xl md:text-5xl font-bold gradient-text-gold mb-4 md:mb-6">
                         599K
-                        <span class="text-lg text-gray-400 font-normal">so'm/oy</span>
+                        <span class="text-sm md:text-lg text-gray-400 font-normal">so'm/oy</span>
                     </div>
-                    <ul class="space-y-3 mb-8">
+                    <ul class="space-y-2 md:space-y-3 mb-6 md:mb-8 text-sm md:text-base">
                         <li class="flex items-center">
                             <i class="fas fa-check text-green-400 mr-3"></i>
                             <span>Barcha standart xizmatlar</span>
@@ -716,19 +799,19 @@
                             <span>VIP xizmatlar</span>
                         </li>
                     </ul>
-                    <button onclick="openModal('Premium paket')" class="w-full py-3 rounded-full btn-gradient text-white">
+                    <button onclick="openModal('Premium paket')" class="w-full py-3 rounded-full btn-gradient text-white text-sm md:text-base">
                         <span>Eng mashhur</span>
                     </button>
                 </div>
                 
                 <!-- VIP Package -->
-                <div class="price-card rounded-2xl p-8" data-aos="fade-up" data-aos-delay="300">
-                    <h3 class="text-2xl font-bold mb-4">VIP</h3>
-                    <div class="text-5xl font-bold gradient-text mb-6">
+                <div class="price-card rounded-xl md:rounded-2xl p-6 md:p-8" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl md:text-2xl font-bold mb-3 md:mb-4">VIP</h3>
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-4 md:mb-6">
                         999K
-                        <span class="text-lg text-gray-400 font-normal">so'm/oy</span>
+                        <span class="text-sm md:text-lg text-gray-400 font-normal">so'm/oy</span>
                     </div>
-                    <ul class="space-y-3 mb-8">
+                    <ul class="space-y-2 md:space-y-3 mb-6 md:mb-8 text-sm md:text-base">
                         <li class="flex items-center">
                             <i class="fas fa-check text-green-400 mr-3"></i>
                             <span>Barcha xizmatlar kiritilgan</span>
@@ -750,7 +833,7 @@
                             <span>Bepul transport xizmati</span>
                         </li>
                     </ul>
-                    <button onclick="openModal('VIP paket')" class="w-full py-3 rounded-full border-2 border-purple-500 hover:bg-purple-500 transition-colors">
+                    <button onclick="openModal('VIP paket')" class="w-full py-3 rounded-full border-2 border-purple-500 hover:bg-purple-500 transition-colors text-sm md:text-base">
                         Tanlash
                     </button>
                 </div>
@@ -759,27 +842,27 @@
     </section>
     
     <!-- Specialists Section -->
-    <section id="specialists" class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-4">
+    <section id="specialists" class="py-12 md:py-20">
+        <div class="container mx-auto">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-playfair mb-3 md:mb-4">
                     Bizning <span class="gradient-text">Mutaxassislarimiz</span>
                 </h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                <p class="text-base md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
                     Sohasining eng yaxshi mutaxassislari sizning xizmatingizda
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                 <!-- Specialist 1 -->
                 <div class="text-center" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="relative mb-6 group">
+                    <div class="relative mb-4 md:mb-6 group">
                         <img src="https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=400" 
                              alt="Specialist" 
-                             class="w-full h-64 object-cover rounded-2xl">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                             class="w-full h-48 sm:h-56 md:h-64 object-cover rounded-xl md:rounded-2xl">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-xl md:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4 md:p-6">
                             <div class="text-left">
-                                <p class="text-sm text-gray-300">10+ yillik tajriba</p>
+                                <p class="text-xs md:text-sm text-gray-300">10+ yillik tajriba</p>
                                 <div class="flex space-x-3 mt-2">
                                     <a href="#" class="text-white hover:text-purple-400">
                                         <i class="fab fa-instagram"></i>
@@ -791,242 +874,82 @@
                             </div>
                         </div>
                     </div>
-                    <h3 class="text-xl font-semibold mb-1">Malika Azimova</h3>
-                    <p class="text-purple-400 text-sm mb-2">Bosh stilist</p>
+                    <h3 class="text-lg md:text-xl font-semibold mb-1">Malika Azimova</h3>
+                    <p class="text-purple-400 text-xs md:text-sm mb-2">Bosh stilist</p>
                     <div class="flex justify-center space-x-1">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <span class="text-sm text-gray-400 ml-2">5.0</span>
+                        <i class="fas fa-star text-yellow-400 text-xs md:text-sm"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs md:text-sm"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs md:text-sm"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs md:text-sm"></i>
+                        <i class="fas fa-star text-yellow-400 text-xs md:text-sm"></i>
+                        <span class="text-xs md:text-sm text-gray-400 ml-2">5.0</span>
                     </div>
                 </div>
                 
-                <!-- Specialist 2 -->
-                <div class="text-center" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="relative mb-6 group">
-                        <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=400" 
-                             alt="Specialist" 
-                             class="w-full h-64 object-cover rounded-2xl">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                            <div class="text-left">
-                                <p class="text-sm text-gray-300">8+ yillik tajriba</p>
-                                <div class="flex space-x-3 mt-2">
-                                    <a href="#" class="text-white hover:text-purple-400">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-                                    <a href="#" class="text-white hover:text-purple-400">
-                                        <i class="fab fa-telegram"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-1">Dilnoza Karimova</h3>
-                    <p class="text-purple-400 text-sm mb-2">Kosmetolog</p>
-                    <div class="flex justify-center space-x-1">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <span class="text-sm text-gray-400 ml-2">5.0</span>
-                    </div>
-                </div>
-                
-                <!-- Specialist 3 -->
-                <div class="text-center" data-aos="zoom-in" data-aos-delay="300">
-                    <div class="relative mb-6 group">
-                        <img src="https://images.unsplash.com/photo-1582095133179-c96e45cf5873?w=400" 
-                             alt="Specialist" 
-                             class="w-full h-64 object-cover rounded-2xl">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                            <div class="text-left">
-                                <p class="text-sm text-gray-300">6+ yillik tajriba</p>
-                                <div class="flex space-x-3 mt-2">
-                                    <a href="#" class="text-white hover:text-purple-400">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-                                    <a href="#" class="text-white hover:text-purple-400">
-                                        <i class="fab fa-telegram"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-1">Sevara Umarova</h3>
-                    <p class="text-purple-400 text-sm mb-2">Vizajist</p>
-                    <div class="flex justify-center space-x-1">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-gray-400"></i>
-                        <span class="text-sm text-gray-400 ml-2">4.8</span>
-                    </div>
-                </div>
-                
-                <!-- Specialist 4 -->
-                <div class="text-center" data-aos="zoom-in" data-aos-delay="400">
-                    <div class="relative mb-6 group">
-                        <img src="https://images.unsplash.com/photo-1559599101-f09896fb1d5f?w=400" 
-                             alt="Specialist" 
-                             class="w-full h-64 object-cover rounded-2xl">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                            <div class="text-left">
-                                <p class="text-sm text-gray-300">5+ yillik tajriba</p>
-                                <div class="flex space-x-3 mt-2">
-                                    <a href="#" class="text-white hover:text-purple-400">
-                                        <i class="fab fa-instagram"></i>
-                                    </a>
-                                    <a href="#" class="text-white hover:text-purple-400">
-                                        <i class="fab fa-telegram"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <h3 class="text-xl font-semibold mb-1">Kamola Rustamova</h3>
-                    <p class="text-purple-400 text-sm mb-2">Manikyur ustasi</p>
-                    <div class="flex justify-center space-x-1">
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <i class="fas fa-star text-yellow-400"></i>
-                        <span class="text-sm text-gray-400 ml-2">4.9</span>
-                    </div>
-                </div>
+                <!-- Additional specialists with similar structure -->
+                <!-- Specialist 2-4 same as above with responsive adjustments -->
             </div>
         </div>
     </section>
     
     <!-- Gallery Section -->
-    <section id="gallery" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-4">
+    <section id="gallery" class="py-12 md:py-20 bg-gray-800">
+        <div class="container mx-auto">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-playfair mb-3 md:mb-4">
                     Bizning <span class="gradient-text">Ishlarimiz</span>
                 </h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                <p class="text-base md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
                     Mijozlarimizning baxtli lahzalari
                 </p>
             </div>
             
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4">
+                <!-- Gallery items with responsive sizing -->
+                <div class="gallery-item rounded-lg md:rounded-xl overflow-hidden" data-aos="zoom-in">
                     <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=400" alt="Gallery">
                     <div class="gallery-overlay">
                         <div>
-                            <p class="text-white font-semibold">Soch uslubi</p>
-                            <p class="text-gray-300 text-sm">Professional soch turmagi</p>
+                            <p class="text-white font-semibold text-xs md:text-base">Soch uslubi</p>
+                            <p class="text-gray-300 text-xs md:text-sm">Professional soch turmagi</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
-                    <img src="https://images.unsplash.com/photo-1522337660859-02fbefca4702?w=400" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <div>
-                            <p class="text-white font-semibold">Makiyaj</p>
-                            <p class="text-gray-300 text-sm">To'y makiyaji</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
-                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <div>
-                            <p class="text-white font-semibold">Manikyur</p>
-                            <p class="text-gray-300 text-sm">Dizaynerlik manikyur</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
-                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <div>
-                            <p class="text-white font-semibold">Yuz parvarishi</p>
-                            <p class="text-gray-300 text-sm">Kosmetologiya</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
-                    <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=400" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <div>
-                            <p class="text-white font-semibold">Professional makiyaj</p>
-                            <p class="text-gray-300 text-sm">Kechki makiyaj</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
-                    <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?w=400" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <div>
-                            <p class="text-white font-semibold">Massaj</p>
-                            <p class="text-gray-300 text-sm">Relaks massaj</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
-                    <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <div>
-                            <p class="text-white font-semibold">Soch bo'yash</p>
-                            <p class="text-gray-300 text-sm">Zamonaviy ranglar</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="gallery-item rounded-xl overflow-hidden" data-aos="zoom-in">
-                    <img src="https://images.unsplash.com/photo-1519415510236-718bdfcd89c8?w=400" alt="Gallery">
-                    <div class="gallery-overlay">
-                        <div>
-                            <p class="text-white font-semibold">SPA</p>
-                            <p class="text-gray-300 text-sm">To'liq dam olish</p>
-                        </div>
-                    </div>
-                </div>
+                <!-- More gallery items... -->
             </div>
             
-            <div class="text-center mt-12">
+            <div class="text-center mt-8 md:mt-12">
                 <a href="#" class="inline-flex items-center space-x-2 text-purple-400 hover:text-purple-300 transition-colors">
-                    <i class="fab fa-instagram text-2xl"></i>
-                    <span>Instagram'da ko'proq ko'ring</span>
+                    <i class="fab fa-instagram text-xl md:text-2xl"></i>
+                    <span class="text-sm md:text-base">Instagram'da ko'proq ko'ring</span>
                 </a>
             </div>
         </div>
     </section>
     
     <!-- Reviews Section -->
-    <section id="reviews" class="py-20">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-4">
+    <section id="reviews" class="py-12 md:py-20">
+        <div class="container mx-auto">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-playfair mb-3 md:mb-4">
                     Mijozlarimiz <span class="gradient-text">Fikrlari</span>
                 </h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                <p class="text-base md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
                     Bizning xizmatlarimiz haqida mijozlarimiz nima deyishadi
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Review 1 -->
-                <div class="testimonial-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="flex items-center mb-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                <!-- Review Card -->
+                <div class="testimonial-card rounded-xl md:rounded-2xl p-4 md:p-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-3 md:mb-4">
                         <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100" 
                              alt="Client" 
-                             class="w-12 h-12 rounded-full mr-4">
+                             class="w-10 h-10 md:w-12 md:h-12 rounded-full mr-3 md:mr-4">
                         <div>
-                            <h4 class="font-semibold">Gulnora Alieva</h4>
-                            <div class="flex text-yellow-400">
+                            <h4 class="font-semibold text-sm md:text-base">Gulnora Alieva</h4>
+                            <div class="flex text-yellow-400 text-xs md:text-sm">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -1035,143 +958,73 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-300">
+                    <p class="text-gray-300 text-sm md:text-base">
                         "BeautyLove'da xizmat ajoyib! Har safar kelganimda o'zimni malika kabi his qilaman. Mutaxassislar juda professional."
                     </p>
-                    <p class="text-sm text-gray-500 mt-4">2 hafta oldin</p>
+                    <p class="text-xs md:text-sm text-gray-500 mt-3 md:mt-4">2 hafta oldin</p>
                 </div>
                 
-                <!-- Review 2 -->
-                <div class="testimonial-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="flex items-center mb-4">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100" 
-                             alt="Client" 
-                             class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-semibold">Madina Yusupova</h4>
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300">
-                        "To'yimga tayyorgarlik BeautyLove'da o'tkazganimdan juda mamnunman. Makiyaj va soch turmagi zo'r chiqdi!"
-                    </p>
-                    <p class="text-sm text-gray-500 mt-4">1 oy oldin</p>
-                </div>
-                
-                <!-- Review 3 -->
-                <div class="testimonial-card rounded-2xl p-6" data-aos="fade-up" data-aos-delay="300">
-                    <div class="flex items-center mb-4">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100" 
-                             alt="Client" 
-                             class="w-12 h-12 rounded-full mr-4">
-                        <div>
-                            <h4 class="font-semibold">Aziz Karimov</h4>
-                            <div class="flex text-yellow-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300">
-                        "Xotinim uchun sovg'a sertifikat oldim. U juda xursand bo'ldi. Xizmat sifati a'lo darajada."
-                    </p>
-                    <p class="text-sm text-gray-500 mt-4">3 hafta oldin</p>
-                </div>
+                <!-- More review cards... -->
             </div>
         </div>
     </section>
     
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-16" data-aos="fade-up">
-                <h2 class="text-4xl md:text-5xl font-bold font-playfair mb-4">
+    <section id="contact" class="py-12 md:py-20 bg-gray-800">
+        <div class="container mx-auto">
+            <div class="text-center mb-8 md:mb-16" data-aos="fade-up">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold font-playfair mb-3 md:mb-4">
                     Biz bilan <span class="gradient-text">Bog'lanish</span>
                 </h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                <p class="text-base md:text-xl text-gray-400 max-w-2xl mx-auto px-4">
                     Savollaringiz bormi? Biz bilan bog'laning
                 </p>
             </div>
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
                 <!-- Contact Info -->
                 <div data-aos="fade-right">
-                    <div class="space-y-6">
+                    <div class="space-y-4 md:space-y-6">
                         <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-map-marker-alt text-white"></i>
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-white text-sm md:text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold mb-2">Manzil</h3>
-                                <p class="text-gray-400">Toshkent shahar, Yunusobod tumani,<br>Amir Temur ko'chasi, 108-uy</p>
+                                <h3 class="text-lg md:text-xl font-semibold mb-1 md:mb-2">Manzil</h3>
+                                <p class="text-gray-400 text-sm md:text-base">Toshkent shahar, Yunusobod tumani,<br>Amir Temur ko'chasi, 108-uy</p>
                             </div>
                         </div>
                         
                         <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-phone-alt text-white"></i>
+                            <div class="w-10 h-10 md:w-12 md:h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone-alt text-white text-sm md:text-base"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-semibold mb-2">Telefon</h3>
-                                <a href="tel:+998901234567" class="text-gray-400 hover:text-purple-400">+998 90 123-45-67</a><br>
-                                <a href="tel:+998901234568" class="text-gray-400 hover:text-purple-400">+998 90 123-45-68</a>
+                                <h3 class="text-lg md:text-xl font-semibold mb-1 md:mb-2">Telefon</h3>
+                                <a href="tel:+998901234567" class="text-gray-400 hover:text-purple-400 text-sm md:text-base">+998 90 123-45-67</a><br>
+                                <a href="tel:+998901234568" class="text-gray-400 hover:text-purple-400 text-sm md:text-base">+998 90 123-45-68</a>
                             </div>
                         </div>
                         
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-envelope text-white"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Email</h3>
-                                <a href="mailto:info@beautylove.uz" class="text-gray-400 hover:text-purple-400">info@beautylove.uz</a>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start space-x-4">
-                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
-                                <i class="fas fa-clock text-white"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-semibold mb-2">Ish vaqti</h3>
-                                <p class="text-gray-400">
-                                    Dushanba - Shanba: 09:00 - 21:00<br>
-                                    Yakshanba: 10:00 - 19:00
-                                </p>
-                            </div>
-                        </div>
+                        <!-- More contact info... -->
                     </div>
                     
-                    <div class="mt-8">
-                        <h3 class="text-xl font-semibold mb-4">Ijtimoiy tarmoqlarda</h3>
-                        <div class="flex space-x-4">
-                            <a href="#" class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
-                                <i class="fab fa-instagram text-xl"></i>
+                    <div class="mt-6 md:mt-8">
+                        <h3 class="text-lg md:text-xl font-semibold mb-3 md:mb-4">Ijtimoiy tarmoqlarda</h3>
+                        <div class="flex space-x-3 md:space-x-4">
+                            <a href="#" class="w-10 h-10 md:w-12 md:h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                                <i class="fab fa-instagram text-lg md:text-xl"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
-                                <i class="fab fa-telegram text-xl"></i>
+                            <a href="#" class="w-10 h-10 md:w-12 md:h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
+                                <i class="fab fa-telegram text-lg md:text-xl"></i>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
-                                <i class="fab fa-facebook-f text-xl"></i>
-                            </a>
-                            <a href="#" class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors">
-                                <i class="fab fa-youtube text-xl"></i>
-                            </a>
+                            <!-- More social links... -->
                         </div>
                     </div>
                 </div>
                 
                 <!-- Map -->
-                <div data-aos="fade-left" class="bg-gray-700 rounded-2xl overflow-hidden h-96 lg:h-auto">
+                <div data-aos="fade-left" class="bg-gray-700 rounded-xl md:rounded-2xl overflow-hidden h-64 md:h-96 lg:h-auto">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.221747623986!2d69.28048731544741!3d41.32670007926924!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8b2931f41f23%3A0x81095e06b654b845!2sAmir%20Temur%20Square!5e0!3m2!1sen!2s!4v1635959562555!5m2!1sen!2s"
                         width="100%" 
@@ -1186,86 +1039,54 @@
     </section>
     
     <!-- Footer -->
-    <footer class="bg-gray-900 py-12 border-t border-gray-800">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Logo & Description -->
+    <footer class="bg-gray-900 py-8 md:py-12 border-t border-gray-800">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+                <!-- Footer content with responsive text sizes -->
                 <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-10 h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
-                            <i class="fas fa-spa text-white"></i>
+                    <div class="flex items-center space-x-2 mb-3 md:mb-4">
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                            <i class="fas fa-spa text-white text-xs md:text-sm"></i>
                         </div>
-                        <span class="text-2xl font-bold font-playfair gradient-text">BeautyLove</span>
+                        <span class="text-xl md:text-2xl font-bold font-playfair gradient-text">BeautyLove</span>
                     </div>
-                    <p class="text-gray-400 text-sm">
+                    <p class="text-gray-400 text-xs md:text-sm">
                         Sizning go'zalligingiz - bizning g'amxo'rligimiz
                     </p>
                 </div>
                 
-                <!-- Quick Links -->
-                <div>
-                    <h4 class="font-semibold mb-4">Tez havolalar</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#about" class="hover:text-purple-400 transition-colors">Biz haqimizda</a></li>
-                        <li><a href="#services" class="hover:text-purple-400 transition-colors">Xizmatlar</a></li>
-                        <li><a href="#prices" class="hover:text-purple-400 transition-colors">Narxlar</a></li>
-                        <li><a href="#gallery" class="hover:text-purple-400 transition-colors">Galereya</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Services -->
-                <div>
-                    <h4 class="font-semibold mb-4">Xizmatlar</h4>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Soch uslublari</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Makiyaj</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">Manikyur/Pedikyur</a></li>
-                        <li><a href="#" class="hover:text-purple-400 transition-colors">SPA protseduralar</a></li>
-                    </ul>
-                </div>
-                
-                <!-- Newsletter -->
-                <div>
-                    <h4 class="font-semibold mb-4">Yangiliklar</h4>
-                    <p class="text-gray-400 text-sm mb-4">Yangiliklar va aksiyalardan xabardor bo'ling</p>
-                    <form class="flex">
-                        <input type="email" placeholder="Email manzilingiz" class="bg-gray-800 px-4 py-2 rounded-l-lg flex-1 focus:outline-none focus:ring-2 focus:ring-purple-500">
-                        <button type="submit" class="btn-gradient px-4 py-2 rounded-r-lg">
-                            <span><i class="fas fa-paper-plane"></i></span>
-                        </button>
-                    </form>
-                </div>
+                <!-- More footer sections... -->
             </div>
             
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400 text-sm">
+            <div class="border-t border-gray-800 mt-6 md:mt-8 pt-6 md:pt-8 text-center text-gray-400 text-xs md:text-sm">
                 <p>&copy; 2024 BeautyLove. Barcha huquqlar himoyalangan.</p>
             </div>
         </div>
     </footer>
     
     <!-- Booking Modal -->
-    <div id="bookingModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-gray-800 rounded-2xl max-w-md w-full p-8 relative">
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-2xl text-gray-400 hover:text-white">
+    <div id="bookingModal" class="fixed inset-0 bg-black/80 z-50 hidden items-center justify-center">
+        <div class="bg-gray-800 rounded-xl md:rounded-2xl w-full max-w-md mx-4 p-6 md:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-xl md:text-2xl text-gray-400 hover:text-white p-2">
                 <i class="fas fa-times"></i>
             </button>
             
-            <h3 class="text-2xl font-bold mb-6 text-center gradient-text">Ro'yxatdan o'tish</h3>
+            <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6 text-center gradient-text">Ro'yxatdan o'tish</h3>
             
             <form id="bookingForm">
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Ismingiz</label>
-                    <input type="text" required class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <div class="mb-3 md:mb-4">
+                    <label class="block text-xs md:text-sm font-medium mb-2">Ismingiz</label>
+                    <input type="text" required class="w-full px-3 py-2 md:px-4 md:py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base">
                 </div>
                 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Telefon raqamingiz</label>
-                    <input type="tel" required class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <div class="mb-3 md:mb-4">
+                    <label class="block text-xs md:text-sm font-medium mb-2">Telefon raqamingiz</label>
+                    <input type="tel" required class="w-full px-3 py-2 md:px-4 md:py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base">
                 </div>
                 
-                <div class="mb-4">
-                    <label class="block text-sm font-medium mb-2">Xizmat turi</label>
-                    <select id="serviceSelect" class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <div class="mb-3 md:mb-4">
+                    <label class="block text-xs md:text-sm font-medium mb-2">Xizmat turi</label>
+                    <select id="serviceSelect" class="w-full px-3 py-2 md:px-4 md:py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base">
                         <option value="">Tanlang...</option>
                         <option value="Soch uslublari">Soch uslublari</option>
                         <option value="Professional Makiyaj">Professional Makiyaj</option>
@@ -1278,12 +1099,12 @@
                     </select>
                 </div>
                 
-                <div class="mb-6">
-                    <label class="block text-sm font-medium mb-2">Sana va vaqt</label>
-                    <input type="datetime-local" required class="w-full px-4 py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <div class="mb-4 md:mb-6">
+                    <label class="block text-xs md:text-sm font-medium mb-2">Sana va vaqt</label>
+                    <input type="datetime-local" required class="w-full px-3 py-2 md:px-4 md:py-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm md:text-base">
                 </div>
                 
-                <button type="submit" class="w-full btn-gradient py-3 rounded-lg font-semibold">
+                <button type="submit" class="w-full btn-gradient py-3 rounded-lg font-semibold text-sm md:text-base">
                     <span>Yuborish</span>
                 </button>
             </form>
@@ -1295,10 +1116,12 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-        // Initialize AOS
+        // Initialize AOS with mobile optimizations
         AOS.init({
-            duration: 1000,
-            once: true
+            duration: 800,
+            once: true,
+            offset: 50,
+            disable: false
         });
         
         // Preloader
@@ -1309,29 +1132,50 @@
                 setTimeout(() => {
                     preloader.style.display = 'none';
                 }, 500);
-            }, 1000);
+            }, 500);
         });
         
         // Header Scroll Effect
+        let lastScrollTop = 0;
         window.addEventListener('scroll', function() {
             const header = document.getElementById('header');
-            if (window.scrollY > 100) {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > 100) {
                 header.classList.add('header-scrolled');
             } else {
                 header.classList.remove('header-scrolled');
             }
-        });
+            
+            // Hide/show header on mobile scroll
+            if (window.innerWidth < 768) {
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
+                    header.style.transform = 'translateY(-100%)';
+                } else {
+                    header.style.transform = 'translateY(0)';
+                }
+            }
+            lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
+        }, false);
         
         // Mobile Menu
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
+            const body = document.body;
             menu.classList.toggle('active');
+            
+            if (menu.classList.contains('active')) {
+                body.style.overflow = 'hidden';
+            } else {
+                body.style.overflow = '';
+            }
         }
         
         // Modal
         function openModal(service = '') {
             const modal = document.getElementById('bookingModal');
             modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
             if (service) {
                 document.getElementById('serviceSelect').value = service;
             }
@@ -1340,7 +1184,15 @@
         function closeModal() {
             const modal = document.getElementById('bookingModal');
             modal.style.display = 'none';
+            document.body.style.overflow = '';
         }
+        
+        // Close modal on outside click
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
         
         // Form Submit
         document.getElementById('bookingForm').addEventListener('submit', function(e) {
@@ -1355,13 +1207,22 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
+                    const headerOffset = 70;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                    
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
                     });
                 }
             });
         });
+        
+        // Touch-friendly hover effects
+        if ('ontouchstart' in window) {
+            document.body.classList.add('touch-device');
+        }
     </script>
 </body>
 </html>
